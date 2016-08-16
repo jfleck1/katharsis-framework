@@ -2,10 +2,9 @@ package io.katharsis.example.jersey;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.katharsis.example.jersey.domain.repository.ProjectRepository;
-import io.katharsis.example.jersey.domain.repository.TaskRepository;
 import io.katharsis.example.jersey.domain.repository.TaskToProjectRepository;
-import io.katharsis.example.jersey.domain.repository.TaskToProjectRepositoryFactory;
 import io.katharsis.rs.KatharsisProperties;
+import io.katharsis.rs.RsServiceUrlProvider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -20,13 +19,13 @@ public class JerseyApplication extends ResourceConfig {
 
     public JerseyApplication() {
         property(KatharsisProperties.RESOURCE_SEARCH_PACKAGE, "io.katharsis.example.jersey.domain");
-        property(KatharsisProperties.RESOURCE_DEFAULT_DOMAIN, APPLICATION_URL);
         register(KatharsisDynamicFeature.class);
+        register(RsServiceUrlProvider.class);
         register(new AbstractBinder() {
             @Override
             public void configure() {
                 bindFactory(ObjectMapperFactory.class).to(ObjectMapper.class).in(Singleton.class);
-                bindService(TaskRepository.class);
+
                 bindService(ProjectRepository.class);
                 bindService(TaskToProjectRepository.class);
             }

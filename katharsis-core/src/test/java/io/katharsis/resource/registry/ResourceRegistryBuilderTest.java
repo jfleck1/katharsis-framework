@@ -43,7 +43,7 @@ public class ResourceRegistryBuilderTest {
             resourceInformationBuilder);
 
         // WHEN
-        ResourceRegistry resourceRegistry = sut.build(TEST_MODELS_PACKAGE, TEST_MODELS_URL);
+        ResourceRegistry resourceRegistry = sut.build(TEST_MODELS_PACKAGE, new ConstantServiceUrlProvider(TEST_MODELS_URL));
 
         // THEN
         RegistryEntry tasksEntry = resourceRegistry.getEntry("tasks");
@@ -71,7 +71,7 @@ public class ResourceRegistryBuilderTest {
         String packageNames = String.format("java.lang,%s,io.katharsis.locator", TEST_MODELS_PACKAGE);
 
         // WHEN
-        ResourceRegistry resourceRegistry = sut.build(packageNames, TEST_MODELS_URL);
+        ResourceRegistry resourceRegistry = sut.build(packageNames, new ConstantServiceUrlProvider(TEST_MODELS_URL));
 
         // THEN
         RegistryEntry tasksEntry = resourceRegistry.getEntry("tasks");
@@ -95,7 +95,7 @@ public class ResourceRegistryBuilderTest {
         expectedException.expect(RepositoryInstanceNotFoundException.class);
 
         // WHEN
-        sut.build(TEST_MODELS_PACKAGE, TEST_MODELS_URL);
+        sut.build(TEST_MODELS_PACKAGE, new ConstantServiceUrlProvider(TEST_MODELS_URL));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ResourceRegistryBuilderTest {
             new ResourceRegistryBuilder(new SampleJsonServiceLocator(), resourceInformationBuilder);
 
         // WHEN
-        ResourceRegistry result = sut.build(TEST_MODELS_PACKAGE, TEST_MODELS_URL);
+        ResourceRegistry result = sut.build(TEST_MODELS_PACKAGE, new ConstantServiceUrlProvider(TEST_MODELS_URL));
 
         // THEN
         RegistryEntry entry = result.getEntry(ResourceWithoutRepository.class);
@@ -124,7 +124,7 @@ public class ResourceRegistryBuilderTest {
         String packageNames = String.format("java.lang,%s,io.katharsis.locator", TEST_MODELS_PACKAGE);
 
         // WHEN
-        ResourceRegistry resourceRegistry = sut.build(packageNames, TEST_MODELS_URL);
+        ResourceRegistry resourceRegistry = sut.build(packageNames, new ConstantServiceUrlProvider(TEST_MODELS_URL));
 
         // THEN
         RegistryEntry memorandaEntry = resourceRegistry.getEntry("memoranda");
@@ -141,7 +141,7 @@ public class ResourceRegistryBuilderTest {
             resourceInformationBuilder);
 
         // WHEN
-        ResourceRegistry resourceRegistry = sut.build(TEST_MODELS_PACKAGE, TEST_MODELS_URL);
+        ResourceRegistry resourceRegistry = sut.build(TEST_MODELS_PACKAGE, new ConstantServiceUrlProvider(TEST_MODELS_URL));
 
         // THEN
         RegistryEntry tasksEntry = resourceRegistry.getEntry("tasks");

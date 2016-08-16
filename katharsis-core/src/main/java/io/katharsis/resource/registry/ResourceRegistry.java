@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class ResourceRegistry {
     private final Map<Class, RegistryEntry> resources = new HashMap<>();
-    private final String serviceUrl;
+    private final ServiceUrlProvider serviceUrlProvider;
     private final Logger logger = LoggerFactory.getLogger(ResourceRegistry.class);
 
-    public ResourceRegistry(String serviceUrl) {
-        this.serviceUrl = serviceUrl;
+    public ResourceRegistry(ServiceUrlProvider serviceUrlProvider) {
+        this.serviceUrlProvider = serviceUrlProvider;
     }
 
     /**
@@ -92,11 +92,10 @@ public class ResourceRegistry {
     }
 
     public String getResourceUrl(Class clazz) {
-        return serviceUrl + "/" + getResourceType(clazz);
+        return serviceUrlProvider.getUrl() + "/" + getResourceType(clazz);
     }
-
     public String getServiceUrl() {
-        return serviceUrl;
+        return serviceUrlProvider.getUrl();
     }
 
     /**

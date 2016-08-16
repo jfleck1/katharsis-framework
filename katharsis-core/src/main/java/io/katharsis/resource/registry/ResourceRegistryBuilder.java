@@ -31,11 +31,11 @@ public class ResourceRegistryBuilder {
      * Uses a {@link DefaultResourceLookup} to get all  classes in provided package and finds all resources and repositories associated with found resource.
      *
      * @param packageName Package containing resources (models) and repositories.
-     * @param serviceUrl  URL to the service
+     * @param serviceUrlProvider  Abstract supplier of the service URL
      * @return an instance of ResourceRegistry
      */
-    public ResourceRegistry build(String packageName, @SuppressWarnings("SameParameterValue") String serviceUrl) {
-    	return build(new DefaultResourceLookup(packageName), serviceUrl);
+    public ResourceRegistry build(String packageName, ServiceUrlProvider serviceUrlProvider) {
+    	return build(new DefaultResourceLookup(packageName), serviceUrlProvider);
     }
 
     /**
@@ -45,7 +45,7 @@ public class ResourceRegistryBuilder {
      * @param serviceUrl  URL to the service
      * @return an instance of ResourceRegistry
      */
-    public ResourceRegistry build(ResourceLookup resourceLookup, @SuppressWarnings("SameParameterValue") String serviceUrl) {
+    public ResourceRegistry build(ResourceLookup resourceLookup,  ServiceUrlProvider serviceUrl) {
         Set<Class<?>> jsonApiResources = resourceLookup.getResourceClasses();
         
         Set<ResourceInformation> resourceInformationSet = new HashSet<>(jsonApiResources.size());

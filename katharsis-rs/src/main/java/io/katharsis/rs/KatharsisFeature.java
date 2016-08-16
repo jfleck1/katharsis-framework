@@ -77,16 +77,14 @@ public class KatharsisFeature implements Feature {
 
     @Override
     public boolean configure(FeatureContext context) {
-        String resourceDefaultDomain = (String) context
-            .getConfiguration()
-            .getProperty(KatharsisProperties.RESOURCE_DEFAULT_DOMAIN);
+
         String webPathPrefix = (String) context
             .getConfiguration()
             .getProperty(KatharsisProperties.WEB_PATH_PREFIX);
 
-        String serviceUrl = buildServiceUrl(resourceDefaultDomain, webPathPrefix);
+
         ResourceLookup resourceLookup = createResourceLookup(context);
-        ResourceRegistry resourceRegistry = buildResourceRegistry(resourceLookup, serviceUrl);
+        ResourceRegistry resourceRegistry = buildResourceRegistry(resourceLookup, webPathPrefix);
 
         JsonApiModuleBuilder jsonApiModuleBuilder = new JsonApiModuleBuilder();
         objectMapper.registerModule(jsonApiModuleBuilder.build(resourceRegistry));
@@ -122,10 +120,10 @@ public class KatharsisFeature implements Feature {
         return mapperRegistryBuilder.build(exceptionMapperLookup);
     }
 
-    private ResourceRegistry buildResourceRegistry(ResourceLookup lookup, String serviceUrl) {
+    private ResourceRegistry buildResourceRegistry(ResourceLookup lookup, String pathPrefix) {
         ResourceRegistryBuilder registryBuilder = new ResourceRegistryBuilder(jsonServiceLocator,
             new ResourceInformationBuilder(new ResourceFieldNameTransformer(objectMapper.getSerializationConfig())));
-        return registryBuilder.build(lookup, serviceUrl);
+        return registryBuilder.build(lookup, new RsServiceUrlProvider(pathPrefix));
     }
 
     protected KatharsisFilter createKatharsisFilter(ResourceRegistry resourceRegistry,
@@ -141,4 +139,6 @@ public class KatharsisFeature implements Feature {
         ControllerRegistry controllerRegistry = controllerRegistryBuilder.build();
         return new RequestDispatcher(controllerRegistry, exceptionMapperRegistry);
     }
+
+
 }

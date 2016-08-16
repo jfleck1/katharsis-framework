@@ -18,7 +18,7 @@ public class ResourceRegistryTest {
 
     @Before
     public void resetResourceRegistry() {
-        resourceRegistry = new ResourceRegistry(TEST_MODELS_URL);
+        resourceRegistry = new ResourceRegistry(new ConstantServiceUrlProvider(TEST_MODELS_URL));
     }
 
     @Test

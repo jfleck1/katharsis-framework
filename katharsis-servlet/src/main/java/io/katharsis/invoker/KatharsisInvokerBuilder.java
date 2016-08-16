@@ -27,6 +27,7 @@ import io.katharsis.queryParams.DefaultQueryParamsParser;
 import io.katharsis.queryParams.QueryParamsBuilder;
 import io.katharsis.resource.field.ResourceFieldNameTransformer;
 import io.katharsis.resource.information.ResourceInformationBuilder;
+import io.katharsis.resource.registry.ConstantServiceUrlProvider;
 import io.katharsis.resource.registry.ResourceRegistry;
 import io.katharsis.resource.registry.ResourceRegistryBuilder;
 import io.katharsis.utils.parser.TypeParser;
@@ -147,7 +148,7 @@ public class KatharsisInvokerBuilder {
         ResourceRegistryBuilder registryBuilder =
                 new ResourceRegistryBuilder(jsonServiceLocator, new ResourceInformationBuilder(resourceFieldNameTransformer));
 
-        return registryBuilder.build(resourceSearchPackage, resourceDefaultDomain);
+        return registryBuilder.build(resourceSearchPackage, new ConstantServiceUrlProvider(resourceDefaultDomain));
     }
 
     protected RequestDispatcher createRequestDispatcher(ResourceRegistry resourceRegistry,

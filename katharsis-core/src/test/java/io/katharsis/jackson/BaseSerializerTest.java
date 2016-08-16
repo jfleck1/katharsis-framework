@@ -7,10 +7,7 @@ import io.katharsis.request.path.JsonPath;
 import io.katharsis.request.path.PathBuilder;
 import io.katharsis.resource.field.ResourceFieldNameTransformer;
 import io.katharsis.resource.information.ResourceInformationBuilder;
-import io.katharsis.resource.registry.ResourceRegistry;
-import io.katharsis.resource.registry.ResourceRegistryBuilder;
-import io.katharsis.resource.registry.ResourceRegistryBuilderTest;
-import io.katharsis.resource.registry.ResourceRegistryTest;
+import io.katharsis.resource.registry.*;
 import io.katharsis.response.JsonApiResponse;
 import io.katharsis.response.ResourceResponseContext;
 import org.junit.Before;
@@ -29,7 +26,7 @@ public abstract class BaseSerializerTest {
         ResourceRegistryBuilder registryBuilder = new ResourceRegistryBuilder(new SampleJsonServiceLocator(),
             resourceInformationBuilder);
         resourceRegistry = registryBuilder
-            .build(ResourceRegistryBuilderTest.TEST_MODELS_PACKAGE, ResourceRegistryTest.TEST_MODELS_URL);
+            .build(ResourceRegistryBuilderTest.TEST_MODELS_PACKAGE, new ConstantServiceUrlProvider(ResourceRegistryTest.TEST_MODELS_URL));
 
         JsonApiModuleBuilder jsonApiModuleBuilder = new JsonApiModuleBuilder();
 
@@ -44,4 +41,6 @@ public abstract class BaseSerializerTest {
         return new JsonApiResponse()
             .setEntity(resource);
     }
+
+
 }

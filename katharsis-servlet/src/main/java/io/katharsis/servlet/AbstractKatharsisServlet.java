@@ -16,25 +16,21 @@
  */
 package io.katharsis.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.katharsis.dispatcher.RequestDispatcher;
 import io.katharsis.invoker.KatharsisInvoker;
 import io.katharsis.invoker.KatharsisInvokerBuilder;
 import io.katharsis.invoker.KatharsisInvokerContext;
 import io.katharsis.invoker.KatharsisInvokerException;
 import io.katharsis.resource.registry.ResourceRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 /**
  * Abstract base servlet class to integrate with Katharsis-core.
